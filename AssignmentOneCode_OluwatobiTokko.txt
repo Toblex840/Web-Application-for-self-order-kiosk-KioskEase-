@@ -1,0 +1,265 @@
+
+/* ---------- HTML CODE ----------  */
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oluwatobi Tokko's Self Order Kiosk</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to Oluwatobi Tokko's Store</h1>
+    </header>
+
+    <div><h3>Order an Item</h3></div>
+
+    <section class="itemlist">
+        <div class="itemsToOrder">
+            <img src="images/pexels-jess-vide-5505409.jpg">
+            <h2>Banana Bunch</h2>
+            <p>Price: $4.75</p>
+            <button id="bananabunch-add">Purchase Item</button>
+        </div>
+        <div class="itemsToOrder">
+            <img src="images/pexels-delphine-hourlay-91322-691166.jpg">
+            <h2>Orange Single</h2>
+            <p>Price: $0.99</p>
+            <button id="orange-add">Purchase Item</button>
+        </div>
+        <div class="itemsToOrder">
+            <img src="images/pexels-vovaflame-3155766.jpg">
+            <h2>Avocado Single</h2>
+            <p>Price: $1.20</p>
+            <button id="avocado-add">Purchase Item</button>
+        </div>
+        <div class="itemsToOrder">
+            <img src="images/pexels-calwin-veigas-1270572734-24031437.jpg">
+            <h2>Corn Bunch x10</h2>
+            <p>Price: $5.00</p>
+            <button id="corn-add">Purchase Item</button>
+        </div>
+        <div class="itemsToOrder">
+            <img src="images/pexels-fotios-photos-24277434.jpg">
+            <h2>Green Grapes</h2>
+            <p>Price: $10.10</p>
+            <button id="greengrapes-add">Purchase Item</button>
+        </div>
+    </section>
+<br>
+    <div class="checkout">
+         <button id="place-order" class="outcheck"><!--<img src="images/shopping-bag.png" class="c_o"> --> View Checkout</button>
+    </div>
+
+    <div id="showcase-receipt" class="showcase-receipt">
+        <div class="showcase-receipt-content">
+            <span class="close" id="end-order">x</span>
+            <h2>Receipt</h2>
+            <div id="receiptContains"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p> Copyright &copy; 2024 Oluwatobi Tokko's Store </p>
+    </footer>
+</body>
+
+<script src="index.js"></script>
+
+</html>
+
+
+/* ---------- CSS CODE ---------- */
+
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  text-align: center;
+}
+
+h3{
+  text-transform: uppercase;
+  font-size: 1.5rem;
+}
+
+img{
+  height: 200px;
+  width: 100%;
+  border-radius: 10px;
+}
+
+header {
+  background-color: #249ef0;
+  color: white;
+  padding: 18px;
+  text-transform: uppercase;
+}
+
+.itemlist {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin: 10px auto;
+}
+
+.itemsToOrder {
+  border: 1px solid #fff;
+  background-color: white;
+  padding: 15px;
+  width: 150px;
+  border-radius: 15px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.c_o{
+  width: 20px;
+  height: 20px;
+  margin-top: 5px;
+}
+
+.outcheck{
+
+  align-items: center;
+  justify-content: center; 
+  padding: 10px;
+  border: 2px solid #fff;
+  cursor: pointer;
+  /* gap: 10px; Space between image and text */
+}
+
+button {
+  background-color: #38b6f0;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #29a2e1;
+}
+
+footer {
+  background-color: #249ef0;
+  color: white;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  padding: 10px 0;
+}
+
+.showcase-receipt {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.showcase-receipt-content {
+  background-color: white;
+  border-radius: 15px;
+  margin: 15% auto;
+  padding: 20px;
+  border: 0px solid white;
+  width: 80%;
+  max-width: 500px;
+}
+
+.close {
+  color: #000;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: grey;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+/* ---------- JavaScript CODE ---------- */
+
+let orderPlacing = [];
+
+document.getElementById("bananabunch-add").onclick = () => SupplyToOrder('Banana Bunch', 4.75);
+document.getElementById("orange-add").onclick = () => SupplyToOrder('Orange Single', 0.99);
+document.getElementById("avocado-add").onclick = () => SupplyToOrder('Avocado Single', 1.20);
+document.getElementById("corn-add").onclick = () => SupplyToOrder('Corn Bunch', 5.00);
+document.getElementById("greengrapes-add").onclick = () => SupplyToOrder('Green Grapes', 10.10);
+
+function SupplyToOrder(orderName, price) {
+    let quantity = prompt(`Input quantity for ${orderName}:`);
+    
+    quantity = Number(quantity);
+    if (isNaN(quantity) || quantity <= 0) {
+        alert('Please input a real number. 😑');
+        return;
+    }
+
+    orderPlacing.push({ orderName, price, quantity });
+    alert(`${orderName} is Successfully added in Checkout. 😘`);
+}
+
+document.getElementById("place-order").onclick = commenceToCheckout;
+
+function commenceToCheckout() {
+    if (orderPlacing.length === 0) {
+        alert("Your order is empty! 😔");
+        return;
+    }
+
+    let usersName = prompt("Please input a name for the receipt:");
+
+    if (!usersName) {
+        alert("Name is important for checkout.");
+        return;
+    }
+
+    showReceipt(usersName);
+}
+
+function showReceipt(usersName) {
+    let receiptContains = `<h3>Summary for ${usersName}</h3>`;
+    let amount = 0;
+
+    orderPlacing.forEach(item => {
+        let itemTotal = item.price * item.quantity;
+        receiptContains += `<p>${item.orderName} - $${item.price.toFixed(2)} x ${item.quantity} = $${itemTotal.toFixed(2)}</p>`;
+        amount += itemTotal;
+    });
+
+    let tax = amount * 0.13;
+    let total = amount + tax;
+
+    receiptContains += `<p><strong>Amount:</strong> $${amount.toFixed(2)}</p>`;
+    receiptContains += `<p><strong>13% Tax:</strong> $${tax.toFixed(2)}</p>`;
+    receiptContains += `<p><strong>Total: $${total.toFixed(2)} </strong></p>`;
+
+    document.getElementById('receiptContains').innerHTML = receiptContains;
+    document.getElementById('showcase-receipt').style.display = 'block';
+    orderPlacing = [];
+}
+
+document.getElementById("end-order").onclick = closeReceipt;
+
+function closeReceipt() {
+    document.getElementById('showcase-receipt').style.display = 'none';
+}
+
